@@ -42,3 +42,25 @@ dependencyManagement {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
+
+task dockerBuild {
+	doFirst {
+		project.file("build/docker").mkdir()
+	}
+	doLast {
+		copy {
+			from 'build/libs/'
+			include "*.jar"
+			into "build/docker"
+			rename { String fileName -> "application.jar" }
+		}
+		copy {
+			from 'docker/Dockerfile'
+			into "build/docker"
+		}
+		copy {
+			from 'docker/Dockerfile'
+			into "build/docker"
+		}
+	}
+}
